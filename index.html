@@ -156,37 +156,15 @@
             
             let currentData = []; // 存储当前加载的所有视频数据
             
-            // 获取stocks文件夹中的所有json文件
-            fetch('./stocks/')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('无法访问文件夹');
-                    }
-                    return response.text();
-                })
-                .then(html => {
-                    // 解析HTML以获取文件列表
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(html, 'text/html');
-                    const links = Array.from(doc.querySelectorAll('a'));
-                    
-                    // 筛选.json文件
-                    const jsonFiles = links
-                        .map(link => link.getAttribute('href'))
-                        .filter(file => file && file.endsWith('.json'));
-                    
-                    // 添加到下拉列表
-                    jsonFiles.forEach(file => {
-                        const option = document.createElement('option');
-                        option.value = file;
-                        option.textContent = file;
-                        fileSelect.appendChild(option);
-                    });
-                })
-                .catch(error => {
-                    console.error('获取文件列表出错:', error);
-                    fileDescription.textContent = '无法读取文件列表，请确保stocks文件夹存在且有权限访问';
-                });
+            // 硬编码文件列表
+            const jsonFiles = ['DrMattDrMike.json']; // 添加你的所有JSON文件名
+            // 添加到下拉列表
+            jsonFiles.forEach(file => {
+                const option = document.createElement('option');
+                option.value = file;
+                option.textContent = file;
+                fileSelect.appendChild(option);
+            });
             
             // 随机选择并展示视频的函数
             function showRandomVideos() {
