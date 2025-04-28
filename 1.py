@@ -35,7 +35,7 @@ def get_channel_videos(api_key, channel_id):
             video_id = item['snippet']['resourceId']['videoId']
             video_title = item['snippet']['title']
             video_description = item['snippet']['description']
-            thumbnail_url = item['snippet']['thumbnails']['high']['url']
+            thumbnail_url = item['snippet']['thumbnails'].get('maxres', {}).get('url') or item['snippet']['thumbnails'].get('standard', {}).get('url') or item['snippet']['thumbnails']['high']['url']
             video_url = f'https://www.youtube.com/watch?v={video_id}'
             
             videos.append({
