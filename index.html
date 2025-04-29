@@ -77,6 +77,11 @@
             margin-bottom: 10px;
             color: #333;
         }
+        .video-duration {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 10px;
+        }
         .video-description {
             color: #666;
             font-size: 14px;
@@ -194,6 +199,7 @@
                         </a>
                         <div class="video-info">
                             <div class="video-title">${video.title}</div>
+                            <div class="video-duration">时长: ${convertDuration(video.duration)}</div>
                             <div class="video-description">${video.description || '无描述'}</div>
                             <button class="toggle-details">显示详情</button>
                         </div>
@@ -285,6 +291,27 @@
                 showRandomVideos();
             });
         });
+
+        // 添加时长转换函数
+        function convertDuration(duration) {
+            if (!duration) return '未知时长';
+            
+            // 将ISO 8601格式转换为更友好的格式
+            const matches = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
+            if (!matches) return '未知时长';
+            
+            const hours = matches[1] ? parseInt(matches[1]) : 0;
+            const minutes = matches[2] ? parseInt(matches[2]) : 0;
+            const seconds = matches[3] ? parseInt(matches[3]) : 0;
+            
+            if (hours > 0) {
+                return `${hours}小时${minutes}分钟`;
+            } else if (minutes > 0) {
+                return `${minutes}分钟${seconds}秒`;
+            } else {
+                return `${seconds}秒`;
+            }
+        }
     </script>
 </body>
 </html>
