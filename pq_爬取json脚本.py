@@ -33,6 +33,15 @@ def get_channel_videos(api_key, channel_id):
         
         for item in res['items']:
             video_id = item['snippet']['resourceId']['videoId']
+            
+            # 获取视频详情以获取时长
+            video_details = youtube.videos().list(
+                id=video_id,
+                part='contentDetails'
+            ).execute()
+            
+            duration = video_details['items'][0]['contentDetails']['duration']
+            
             video_title = item['snippet']['title']
             video_description = item['snippet']['description']
             thumbnail_url = item['snippet']['thumbnails'].get('maxres', {}).get('url') or item['snippet']['thumbnails'].get('standard', {}).get('url') or item['snippet']['thumbnails']['high']['url']
@@ -42,7 +51,8 @@ def get_channel_videos(api_key, channel_id):
                 'title': video_title,
                 'description': video_description,
                 'thumbnail': thumbnail_url,
-                'url': video_url
+                'url': video_url,
+                'duration': duration  # 添加视频时长
             })
         
         next_page_token = res.get('nextPageToken')
