@@ -34,13 +34,14 @@ def get_channel_videos(api_key, channel_id):
         for item in res['items']:
             video_id = item['snippet']['resourceId']['videoId']
             
-            # 获取视频详情以获取时长
+            # 获取视频详情以获取时长和发布日期
             video_details = youtube.videos().list(
                 id=video_id,
-                part='contentDetails'
+                part='contentDetails,snippet'  # 添加snippet以获取发布日期
             ).execute()
             
             duration = video_details['items'][0]['contentDetails']['duration']
+            published_at = video_details['items'][0]['snippet']['publishedAt']  # 获取发布日期
             
             video_title = item['snippet']['title']
             video_description = item['snippet']['description']
@@ -52,7 +53,8 @@ def get_channel_videos(api_key, channel_id):
                 'description': video_description,
                 'thumbnail': thumbnail_url,
                 'url': video_url,
-                'duration': duration  # 添加视频时长
+                'duration': duration,
+                'published_at': published_at  # 添加发布日期
             })
         
         next_page_token = res.get('nextPageToken')

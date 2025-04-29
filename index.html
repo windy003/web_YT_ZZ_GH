@@ -82,6 +82,11 @@
             color: #888;
             margin-bottom: 10px;
         }
+        .video-date {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 10px;
+        }
         .video-description {
             color: #666;
             font-size: 14px;
@@ -200,6 +205,7 @@
                         <div class="video-info">
                             <div class="video-title">${video.title}</div>
                             <div class="video-duration">时长: ${convertDuration(video.duration)}</div>
+                            <div class="video-date">发布时间: ${convertDate(video.published_at)}</div>
                             <div class="video-description">${video.description || '无描述'}</div>
                             <button class="toggle-details">显示详情</button>
                         </div>
@@ -311,6 +317,19 @@
             } else {
                 return `${seconds}秒`;
             }
+        }
+
+        // 添加日期转换函数
+        function convertDate(dateString) {
+            if (!dateString) return '未知日期';
+            
+            // 将ISO 8601格式转换为更友好的格式
+            const date = new Date(dateString);
+            return date.toLocaleDateString('zh-CN', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit'
+            });
         }
     </script>
 </body>
