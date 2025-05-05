@@ -178,6 +178,14 @@
                 fileSelect.appendChild(option);
             });
             
+            // 检查localStorage中是否有上次选择的文件
+            const lastSelectedFile = localStorage.getItem('lastSelectedFile');
+            if (lastSelectedFile) {
+                fileSelect.value = lastSelectedFile;
+                // 自动加载上次选择的文件
+                loadBtn.click();
+            }
+            
             // 随机选择并展示视频的函数
             function showRandomVideos() {
                 // 清空容器
@@ -244,6 +252,9 @@
                     alert('请先选择一个文件');
                     return;
                 }
+                
+                // 将选择的文件保存到localStorage
+                localStorage.setItem('lastSelectedFile', selectedFile);
                 
                 fetch(`./stocks/${selectedFile}`)
                     .then(response => response.json())
