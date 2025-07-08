@@ -1,4 +1,5 @@
 # 这个脚本是通过输入API密钥和频道ID，爬取该频道上传的视频信息，并保存到videos.json文件中。
+# 记得要填api  Key和  channel_id
 
 from googleapiclient.discovery import build
 import json, os
@@ -7,10 +8,14 @@ from dotenv import load_dotenv  # 新增导入
 # 加载.env文件
 load_dotenv()
 
-# 从环境变量获取API密钥
-API_KEY = os.getenv('API_KEY')
+
+# 待填写
+API_KEY = "待填写"
+
+
+
 # 替换为你要爬取的频道ID
-CHANNEL_ID = 'UCH6Oc4MAJzzmK0SM805ZnjQ'
+CHANNEL_ID = '待填写'
 
 def get_channel_videos(api_key, channel_id):
     youtube = build('youtube', 'v3', developerKey=api_key)
