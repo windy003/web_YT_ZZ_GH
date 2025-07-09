@@ -145,7 +145,6 @@
         <select id="file-select">
             <option value="">-- 选择一个文件 --</option>
         </select>
-        <button id="load-btn">加载视频</button>
     </div>
     
     <div id="infoDiv">
@@ -160,7 +159,6 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const fileSelect = document.getElementById('file-select');
-            const loadBtn = document.getElementById('load-btn');
             const refreshBtn = document.getElementById('refresh-btn');
             const fileDescription = document.getElementById('file-description');
             const videosContainer = document.getElementById('videos-container');
@@ -183,7 +181,7 @@
             if (lastSelectedFile) {
                 fileSelect.value = lastSelectedFile;
                 // 自动加载上次选择的文件
-                loadBtn.click();
+                loadFile();
             }
             
             // 随机选择并展示视频的函数
@@ -245,9 +243,9 @@
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
             
-            // 加载按钮点击事件
-            loadBtn.addEventListener('click', function() {
+            function loadFile() {
                 const selectedFile = fileSelect.value;
+                console.log(selectedFile);
                 if (!selectedFile) {
                     alert('请先选择一个文件');
                     return;
@@ -296,7 +294,7 @@
                         videosContainer.innerHTML = '<div class="no-file">无法读取文件数据</div>';
                         currentData = [];
                     });
-            });
+            }
             
             // 刷新按钮点击事件
             refreshBtn.addEventListener('click', function() {
@@ -307,8 +305,9 @@
                 
                 showRandomVideos();
             });
-        
-            loadBtn.click();
+
+            // 文件选择下拉框改变事件
+            fileSelect.addEventListener('change', loadFile);
         });
 
         // 添加时长转换函数
@@ -344,9 +343,6 @@
                 day: '2-digit'
             });
         }
-
-
-        
     </script>
 </body>
 </html>
