@@ -10,12 +10,12 @@ load_dotenv()
 
 
 # 待填写
-API_KEY = "待填写"
+API_KEY = os.getenv('API_KEY')
 
 
 
 # 替换为你要爬取的频道ID
-CHANNEL_ID = '待填写'
+CHANNEL_ID = os.getenv('CHANNEL_ID')
 
 def get_channel_videos(api_key, channel_id):
     youtube = build('youtube', 'v3', developerKey=api_key)
