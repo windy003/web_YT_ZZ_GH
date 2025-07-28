@@ -1,8 +1,10 @@
 # 这个脚本是通过输入API密钥和频道ID，爬取该频道上传的视频信息，并保存到videos.json文件中。
 # 记得要填api  Key和  channel_id
+# 自动记录打印时长
+
 
 from googleapiclient.discovery import build
-import json, os
+import json, os ,time
 from dotenv import load_dotenv  # 新增导入
 
 # 加载.env文件
@@ -69,10 +71,22 @@ def get_channel_videos(api_key, channel_id):
     return videos
 
 if __name__ == '__main__':
+    start_time = time.time()
+
     videos = get_channel_videos(API_KEY, CHANNEL_ID)
     
     # 将结果写入JSON文件
     with open('videos.json', 'w', encoding='utf-8') as f:
         json.dump(videos, f, ensure_ascii=False, indent=4)
     
-    print(f"成功爬取了{len(videos)}个视频信息，并保存到videos.json文件中")
+
+    end_time = time.time()
+    # 计算总耗时（秒）
+    total_seconds = end_time - start_time
+
+    # 转换为分钟和秒
+    minutes = int(total_seconds // 60)  # 取整分钟数
+    seconds = int(total_seconds % 60)   # 剩余秒数
+
+    # 格式化输出
+    print(f"爬取时间：{minutes}分{seconds}秒")
