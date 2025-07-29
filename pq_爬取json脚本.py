@@ -1,5 +1,5 @@
 # 这个脚本是通过输入API密钥和频道ID，爬取该频道上传的视频信息，并保存到videos.json文件中。
-# 记得要填api  Key和  channel_id
+# 记得要填API_KEY和CHANNEL_ID
 # 自动记录打印时长
 
 
